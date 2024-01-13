@@ -17,7 +17,8 @@ class ResyApi:
     def get(self, path, params):
         url = self.baseUrl + path
 
-        return get(url, headers=self.headers, params=params)
+        req = get(url, headers=self.headers, params=params)
+        return req.json()
     
     def post(self, path, params):
         url = self.baseUrl + path
@@ -31,4 +32,5 @@ class ResyApi:
         # the post body accepts params stringified a-la query parameters, for some reason
         body = "&".join(f"{k}={v}" for k,v in params.items())
 
-        return post(url, headers=headers, data=body)
+        req = post(url, headers=headers, data=body)
+        return req.json()
