@@ -34,3 +34,31 @@ class ResyApi:
 
         req = post(url, headers=headers, data=body)
         return req.json()
+
+    def getReservations(self, date, partySize, venueId):
+        params = {
+            "lat":        "0",
+            "long":       "0",
+            "day":        date,
+            "party_size": str(partySize),
+            "venue_id":   str(venueId),
+        }
+
+        return self.get("/4/find", params)
+        
+    def getReservationDetails(self, configId, date, partySize):
+        params = {
+            "config_id":  configId,
+            "day":        date,
+            "party_size": partySize.toString
+        }
+
+        return self.get("/3/details", params)
+    
+    def getReservationDetails(self, paymentMethodId, bookToken):
+        params = {
+            "book_token":            bookToken,
+            "struct_payment_method": f'{{"id":{paymentMethodId}}}',
+        }
+
+        return self.get("/3/book", params)
